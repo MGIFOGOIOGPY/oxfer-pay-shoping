@@ -15,7 +15,7 @@ request_lock = threading.Lock()
 def load_proxies():
     global proxies_list
     try:
-        with open('proxies.txt', 'r') as f:
+        with open('proxvies.txt', 'r') as f:
             proxies_list = [line.strip() for line in f if line.strip()]
     except:
         proxies_list = []
