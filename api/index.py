@@ -9,13 +9,13 @@ app = Flask(__name__)
 proxies_list = []
 current_proxy_index = 0
 last_request_time = 0
-request_interval = 9
+request_interval = 10
 request_lock = threading.Lock()
 
 def load_proxies():
     global proxies_list
     try:
-        with open('proxvies.txt', 'r') as f:
+        with open('proxies.txt', 'r') as f:
             proxies_list = [line.strip() for line in f if line.strip()]
     except:
         proxies_list = []
@@ -146,12 +146,12 @@ def check_card(card_data):
         
         wc_response = response2.json()
         
-        result_text = str(wc_response.get('result', '')).lower()
+        result_text = str(wc_response.get('result', ''))
         
-        if any(word in result_text for word in ['success', 'successfully']):
-            status = "Stripe Charge ✅"
+        if any(word.lower() in result_text.lower() for word in ['Success', 'Successfully', 'success']):
+            status = "Charge ✅"
         else:
-            status = "Declined"
+            status = "Declined 🚫"
         
         return {
             "status": status,
